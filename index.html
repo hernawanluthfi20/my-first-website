@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#101d24">
+    <meta name="description" content="A little collection of surprising facts from technology and space.">
+    <title>Curiosity Club | Tech & Space Facts</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --ink: #101d24;
+        --panel: #192a31;
+        --paper: #f2f0e8;
+        --muted: #aab8b5;
+        --mint: #b9f27c;
+        --coral: #ff9077;
+        --line: rgba(242, 240, 232, .16);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background-color: var(--ink);
+        background-image: radial-gradient(rgba(242, 240, 232, .12) .7px, transparent .7px);
+        background-size: 24px 24px;
+        color: var(--paper);
+        font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+      }
+
+      button { font: inherit; }
+
+      .page {
+        width: min(100% - 40px, 1060px);
+        min-height: 100vh;
+        margin-inline: auto;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .topbar {
+        min-height: 82px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--paper);
+        font-size: .9rem;
+        font-weight: 700;
+        letter-spacing: .02em;
+        text-decoration: none;
+      }
+
+      .brand-mark {
+        width: 28px;
+        aspect-ratio: 1;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--mint);
+        color: var(--ink);
+        font-size: 1rem;
+      }
+
+      .top-note {
+        color: var(--muted);
+        font-size: .78rem;
+      }
+
+      main {
+        flex: 1;
+        display: grid;
+        grid-template-columns: minmax(0, .85fr) minmax(340px, 1.15fr);
+        align-items: center;
+        gap: clamp(36px, 8vw, 100px);
+        padding-block: 72px;
+      }
+
+      .intro { max-width: 410px; }
+
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--mint);
+        font-size: .72rem;
+        font-weight: 700;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        width: 25px;
+        height: 1px;
+        background: currentColor;
+        content: "";
+      }
+
+      h1 {
+        margin: 22px 0 16px;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(3.4rem, 7vw, 5.7rem);
+        font-weight: 400;
+        letter-spacing: 0;
+        line-height: .98;
+      }
+
+      h1 span { color: var(--coral); font-style: italic; }
+
+      .intro-copy {
+        max-width: 340px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      .fact-area { width: 100%; }
+
+      .filters {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+
+      .filter {
+        min-height: 40px;
+        padding: 0 16px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: .82rem;
+        transition: color .2s ease, background-color .2s ease, border-color .2s ease;
+      }
+
+      .filter:hover { border-color: var(--paper); color: var(--paper); }
+
+      .filter[aria-pressed="true"] {
+        border-color: var(--mint);
+        background: var(--mint);
+        color: var(--ink);
+        font-weight: 700;
+      }
+
+      .fact-card {
+        min-height: 330px;
+        padding: clamp(26px, 5vw, 48px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        box-shadow: 14px 14px 0 rgba(185, 242, 124, .08);
+      }
+
+      .fact-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .category-label {
+        color: var(--coral);
+        font-size: .72rem;
+        font-weight: 700;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+
+      .fact-count { color: var(--muted); font-size: .76rem; }
+
+      .fact-text {
+        margin: 32px 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+        letter-spacing: 0;
+        line-height: 1.28;
+      }
+
+      .new-fact {
+        min-height: 54px;
+        padding: 0 20px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        align-self: flex-start;
+        border: 0;
+        border-radius: 4px;
+        background: var(--mint);
+        color: var(--ink);
+        cursor: pointer;
+        font-size: .9rem;
+        font-weight: 700;
+        transition: transform .2s ease, background-color .2s ease;
+      }
+
+      .new-fact:hover { transform: translateY(-2px); background: #cafa9d; }
+      .new-fact:active { transform: translateY(0); }
+      button:focus-visible { outline: 3px solid var(--coral); outline-offset: 4px; }
+      .arrow { font-size: 1.15rem; line-height: 1; }
+
+      footer {
+        min-height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: .76rem;
+      }
+
+      .footer-spark { color: var(--coral); }
+
+      @media (max-width: 720px) {
+        .page { width: min(100% - 32px, 520px); }
+        .topbar { min-height: 68px; }
+        main {
+          grid-template-columns: 1fr;
+          gap: 32px;
+          padding-block: 48px;
+        }
+        .intro { max-width: 460px; }
+        h1 { max-width: 400px; font-size: clamp(3.4rem, 15vw, 5rem); }
+        .fact-card { min-height: 300px; }
+        footer { min-height: 58px; }
+      }
+
+      @media (max-width: 390px) {
+        .top-note { max-width: 110px; text-align: right; line-height: 1.4; }
+        .fact-meta { align-items: flex-start; }
+        .fact-count { text-align: right; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Curiosity Club home">
+          <span class="brand-mark" aria-hidden="true">✳</span>
+          CURIOSITY CLUB
+        </a>
+        <span class="top-note">Small facts. Big universe.</span>
+      </header>
+
+      <main>
+        <section class="intro" aria-labelledby="page-title">
+          <p class="eyebrow">A daily dose of wonder</p>
+          <h1 id="page-title">Stay a little <span>curious.</span></h1>
+          <p class="intro-copy">From clever machines to distant worlds, there's always something surprising to discover.</p>
+        </section>
+
+        <section class="fact-area" aria-label="Random fun facts">
+          <div class="filters" role="group" aria-label="Choose a fact category">
+            <button class="filter" type="button" data-filter="all" aria-pressed="true">All facts</button>
+            <button class="filter" type="button" data-filter="tech" aria-pressed="false">Technology</button>
+            <button class="filter" type="button" data-filter="space" aria-pressed="false">Space</button>
+          </div>
+
+          <article class="fact-card" aria-live="polite" aria-atomic="true">
+            <div class="fact-meta">
+              <span class="category-label" id="category-label">Space</span>
+              <span class="fact-count" id="fact-count">Draw 01</span>
+            </div>
+            <p class="fact-text" id="fact-text">A day on Venus is longer than its year.</p>
+            <button class="new-fact" id="new-fact" type="button">
+              Surprise me <span class="arrow" aria-hidden="true">↗</span>
+            </button>
+          </article>
+        </section>
+      </main>
+
+      <footer>
+        <span>Made for the endlessly curious</span>
+        <span><span class="footer-spark" aria-hidden="true">✦</span> Keep looking up</span>
+      </footer>
+    </div>
+
+    <script>
+      const facts = [
+        { category: "Space", type: "space", text: "A day on Venus is longer than its year." },
+        { category: "Technology", type: "tech", text: "The first computer mouse was made of wood." },
+        { category: "Space", type: "space", text: "Saturn's moon Titan has lakes and rivers of liquid methane." },
+        { category: "Technology", type: "tech", text: "The first domain name ever registered was symbolics.com, in 1985." },
+        { category: "Space", type: "space", text: "Neutron stars can spin around 600 times every second." },
+        { category: "Technology", type: "tech", text: "A QR code can still be read if up to 30% of it is damaged." },
+        { category: "Space", type: "space", text: "There are more trees on Earth than stars in the Milky Way." },
+        { category: "Technology", type: "tech", text: "The QWERTY keyboard layout appeared on a typewriter patent in 1878." },
+        { category: "Space", type: "space", text: "Footprints on the Moon can last for millions of years." },
+        { category: "Technology", type: "tech", text: "The first webcam watched a coffee pot at the University of Cambridge." },
+        { category: "Space", type: "space", text: "One million Earths could fit inside the Sun." },
+        { category: "Technology", type: "tech", text: "The word 'robot' comes from a Czech word meaning forced labor." },
+        { category: "Space", type: "space", text: "A year on Neptune lasts about 165 Earth years." },
+        { category: "Technology", type: "tech", text: "An email was sent before the web was invented." },
+        { category: "Space", type: "space", text: "The International Space Station circles Earth about every 90 minutes." },
+        { category: "Technology", type: "tech", text: "The Apollo Guidance Computer had about 4 KB of usable memory." }
+      ];
+
+      const factText = document.querySelector("#fact-text");
+      const categoryLabel = document.querySelector("#category-label");
+      const factCount = document.querySelector("#fact-count");
+      const filterButtons = document.querySelectorAll(".filter");
+      let activeFilter = "all";
+      let previousFact = facts[0];
+      let shownCount = 1;
+
+      function showRandomFact() {
+        const availableFacts = facts.filter((fact) => activeFilter === "all" || fact.type === activeFilter);
+        const choices = availableFacts.filter((fact) => fact !== previousFact);
+        const nextFact = choices[Math.floor(Math.random() * choices.length)];
+
+        previousFact = nextFact;
+        shownCount += 1;
+        factText.textContent = nextFact.text;
+        categoryLabel.textContent = nextFact.category;
+        factCount.textContent = `Draw ${String(shownCount).padStart(2, "0")}`;
+      }
+
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          activeFilter = button.dataset.filter;
+          filterButtons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+          showRandomFact();
+        });
+      });
+
+      document.querySelector("#new-fact").addEventListener("click", showRandomFact);
+    </script>
+  </body>
+</html>
